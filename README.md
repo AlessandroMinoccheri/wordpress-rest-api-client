@@ -12,7 +12,7 @@ some other PHP project, for some reason.
 This library can be installed with [Composer](https://getcomposer.org):
 
 ```text
-composer require vnn/wordpress-rest-api-client
+composer require alessandrominoccheri/wordpress-rest-api-client
 ```
 
 The library will require an Http library to run. [Guzzle](http://guzzlephp.org) is 
