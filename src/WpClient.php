@@ -14,6 +14,7 @@ use Vnn\WpApiClient\Http\ClientInterface;
  * @package Vnn\WpApiClient
  *
  * @method Endpoint\Categories categories()
+ * @method Endpoint\Taxonomies taxonomies()
  * @method Endpoint\Comments comments()
  * @method Endpoint\Media media()
  * @method Endpoint\Pages pages()
