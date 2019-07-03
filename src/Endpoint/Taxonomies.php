@@ -8,19 +8,19 @@ namespace Vnn\WpApiClient\Endpoint;
  */
 class Taxonomies extends AbstractWpEndpoint
 {
-    private $taxonmyName = null;
+    private $taxonomyName = null;
 
     /**
      * {@inheritdoc}
      */
     protected function getEndpoint()
     {
-        return !$this->taxonmyName ? "/wp-json/wp/v2" : "/wp-json/wp/v2/".$this->taxonmyName;
+        return !$this->taxonomyName ? "/wp-json/wp/v2" : "/wp-json/wp/v2/" . $this->taxonomyName;
     }
 
     public function setName($name)
     {
-        $this->taxonmyName = $name;
+        $this->taxonomyName = $name;
 
         return $this;
     }
