@@ -3,6 +3,7 @@
 namespace Vnn\WpApiClient\Endpoint;
 
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use RuntimeException;
 use Vnn\WpApiClient\WpClient;
 
@@ -16,6 +17,11 @@ abstract class AbstractWpEndpoint
      * @var WpClient
      */
     private $client;
+
+    /**
+     * @var Response
+     */
+    private $response;
 
     /**
      * Users constructor.
@@ -41,14 +47,20 @@ abstract class AbstractWpEndpoint
         $uri .= (is_null($params)?'': '?' . http_build_query($params));
 
         $request = new Request('GET', $uri);
-        $response = $this->client->send($request);
+        $this->response = $this->client->send($request);
 
-        if ($response->hasHeader('Content-Type')
-            && substr($response->getHeader('Content-Type')[0], 0, 16) === 'application/json') {
-            return json_decode($response->getBody()->getContents(), true);
+        if ($this->response->hasHeader('Content-Type')
+            && substr($this->response->getHeader('Content-Type')[0], 0, 16) === 'application/json') {
+
+            return json_decode($this->response->getBody()->getContents(),true);
         }
 
         throw new RuntimeException('Unexpected response');
+    }
+
+    public function lastResponseHeaders()
+    {
+        return $this->response->getHeaders() ?? null;
     }
 
     /**
@@ -65,11 +77,11 @@ abstract class AbstractWpEndpoint
         }
 
         $request = new Request('POST', $url, ['Content-Type' => 'application/json'], json_encode($data));
-        $response = $this->client->send($request);
+        $this->response = $this->client->send($request);
 
-        if ($response->hasHeader('Content-Type')
-            && substr($response->getHeader('Content-Type')[0], 0, 16) === 'application/json') {
-            return json_decode($response->getBody()->getContents(), true);
+        if ($this->response->hasHeader('Content-Type')
+            && substr($this->response->getHeader('Content-Type')[0], 0, 16) === 'application/json') {
+            return json_decode($this->response->getBody()->getContents(), true);
         }
 
         throw new RuntimeException('Unexpected response');

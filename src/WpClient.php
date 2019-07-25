@@ -108,4 +108,5 @@ class WpClient
 
         return $this->httpClient->send($request);
     }
+
 }
